@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 class Transaction 
 {
-    private float $amount;
-    private string $description;
+    private ?Customer $customer = null;
+    public function __construct(
+            private float $amount,
+            private string $description
+        ){
+        echo $amount;
+    }
 
-    public function __construct(float $amount,string $description){
-        $this->amount = $amount;
-        $this->description = $description;
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
     }
 
     public function addTax(float $rate): Transaction
@@ -29,9 +34,9 @@ class Transaction
         return $this->amount;
     }
 
-    public function __destruct()
-    {
-        var_dump('Distruct:',$this,'<br />');
-        echo '<br />';
-    }
+    // public function __destruct()
+    // {
+    //     var_dump('Distruct:',$this,'<br />');
+    //     echo '<br />';
+    // }
 }
