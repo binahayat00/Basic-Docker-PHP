@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PaymentGateway\Paddle;
+namespace App\PaymentGateway\Stripe;
 
 class Transaction 
 {
     private ?Customer $customer = null;
     public function __construct(
-            private float $amount,
-            private string $description
+            private float $amount = 15,
+            private string $description = "Default"
         ){
         echo $amount;
-        var_dump((new \Notification\Email()));
     }
 
     public function getCustomer(): ?Customer
