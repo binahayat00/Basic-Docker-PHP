@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace PaymentGateway\Stripe;
+
 class Transaction 
 {
     private ?Customer $customer = null;
@@ -33,10 +35,4 @@ class Transaction
     {
         return $this->amount;
     }
-
-    // public function __destruct()
-    // {
-    //     var_dump('Distruct:',$this,'<br />');
-    //     echo '<br />';
-    // }
 }
