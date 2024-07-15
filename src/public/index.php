@@ -1,23 +1,18 @@
 <?php
 
-// spl_autoload_register(function($class) {
-//     $path =  __DIR__ . '/../' . lcfirst(str_replace('\\','/', $class) . '.php');
-//     require $path;
-
-// });
-
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\PaymentGateway\Paddle\Transaction;
+use App\ToasterPro;
+use App\FancyOven;
 
-$transaction = new Transaction(15);
+$toaster = new ToasterPro();
 
-$reflectionProperty = new ReflectionProperty(Transaction::class, 'amount');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->toastBagel();
 
-$reflectionProperty->setAccessible(true);
-
-$reflectionProperty->setValue($transaction, 125);
-
-var_dump($reflectionProperty->getValue($transaction));
-
-var_dump($transaction->process());
+$fancyOven = new FancyOven($toaster);
+$fancyOven->toast();
