@@ -10,11 +10,14 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\PaymentGateway\Paddle\Transaction;
 
-use App\DB;
+$transaction = new Transaction(15);
 
-DB::getInstance([]);
-DB::getInstance([]);
-DB::getInstance([]);
-DB::getInstance([]);
-DB::getInstance([]);
+$reflectionProperty = new ReflectionProperty(Transaction::class, 'amount');
 
+$reflectionProperty->setAccessible(true);
+
+$reflectionProperty->setValue($transaction, 125);
+
+var_dump($reflectionProperty->getValue($transaction));
+
+var_dump($transaction->process());
