@@ -2,17 +2,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\ToasterPro;
-use App\FancyOven;
+$fields = [
+    // new \App\Field('baseField'),
+    new \App\Text('textField'),
+    // new \App\Boolean('booleanField'),
+    new \App\Checkbox('checkboxField'),
+    new \App\Radio('radioField'),
+];
 
-$toaster = new ToasterPro();
-
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->addSlice('bread');
-$toaster->toastBagel();
-
-$fancyOven = new FancyOven($toaster);
-$fancyOven->toast();
+foreach($fields as $field){
+    echo $field->render() . '<br />';
+}
