@@ -2,6 +2,18 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$service = new App\DebtCollectionService();
+$coffeeMaker = new \App\CoffeeMaker();
+$coffeeMaker->makeCoffee();
 
-echo $service->collectDebt(new \App\CollectionAgency()) . PHP_EOL;
+$latteMaker = new \App\LatteMaker();
+$latteMaker->makeCoffee();
+$latteMaker->makeLatte();
+
+$cappuccinoMaker = new \App\CappuccinoMaker();
+$cappuccinoMaker->makeCoffee();
+$cappuccinoMaker->makeCappuccino();
+
+$allInOneCoffeeMaker = new \App\AllInOneCoffeeMaker();
+$allInOneCoffeeMaker->makeCoffee();
+$allInOneCoffeeMaker->makeLatte();
+$allInOneCoffeeMaker->makeCappuccino();
