@@ -2,38 +2,31 @@
 
 namespace App;
 
+use App\Customer;
+use App\Exception\InvoiceException;
+
 class Invoice
 {
     public string $id;
 
-    public function __construct(public float $amount,
-    public string $description,
-    public string $creditCardNumber)
+    public function __construct(public Customer $customer)
     {
-        $this->id = uniqid('invoice_');
     }
 
-    public function __clone()
+    public function process(float $amount)
     {
-        $this->id = uniqid('invoice_');
-    }
+        if($amount <= 0){
+            throw InvoiceException::invalidAmount();
+        }
 
-    public function __serialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'amount' => $this->amount,
-            'description' => $this->description,
-            'creditCardNumber' => base64_encode($this->creditCardNumber),
-            'foo' => 'bar'
-        ];
-    }
+        if(empty($this->customer->getBillingInfo()))
+        {
+            throw InvoiceException::missingBillingInfo();
+        }
+        echo "Processing $ $amount invoice - ";
+        
+        sleep(1);
 
-    public function __unserialize(array $data): void
-    {
-        $this->id = $data['id'];
-        $this->amount = $data['amount'];
-        $this->description = $data['description'];
-        $this->creditCardNumber = base64_decode($data['creditCardNumber']);
+        echo 'OK' . PHP_EOL;
     }
 }

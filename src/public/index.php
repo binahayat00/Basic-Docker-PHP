@@ -2,13 +2,13 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Exception\InvoiceException;
 use App\Invoice;
+use App\Customer;
 
-$invoice = new Invoice(25,'Invoice 1', '123456789123456');
-
-$invoice2 = clone $invoice;
-
-$str = serialize($invoice);
-
-var_dump(unserialize($str)) . "<br />";
-var_dump($invoice, $invoice2, $invoice === $invoice2);
+$invoice = new Invoice(new Customer(['name' => 'Alex']));
+try {
+$invoice->process(-25);
+} catch (InvoiceException $exception) {
+    echo $exception->getMessage() . ' File:' . $exception->getFile() .' Line:'. $exception->getLine() . PHP_EOL;
+}
