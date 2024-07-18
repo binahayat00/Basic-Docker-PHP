@@ -2,11 +2,13 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$obj = new class(1, 2, 3) {
-    public function __construct(public int $a,public int $b,public int $c)
-    {
+use App\Invoice;
 
-    }
-};
+$invoice = new Invoice(25,'Invoice 1', '123456789123456');
 
-var_dump($obj);
+$invoice2 = clone $invoice;
+
+$str = serialize($invoice);
+
+var_dump(unserialize($str)) . "<br />";
+var_dump($invoice, $invoice2, $invoice === $invoice2);
