@@ -1,12 +1,15 @@
 <?php
 
-use App\Invoice;
-use App\InvoiceCollection;
+use App\Router;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$invoiceCollection = new InvoiceCollection([new Invoice('15'), new Invoice('25'), new Invoice('50')]);
 
-foreach ($invoiceCollection as $invoice) {
-    echo $invoice->id .' - '. $invoice->amount . '<br />' ;
-}
+$router = new Router();
+
+$router->get('/',[App\Classes\Home::class, 'index']);
+$router->get('/invoices',[App\Classes\Invoices::class, 'index']);
+$router->get('/invoices/create',[App\Classes\Invoices::class, 'create']);
+$router->post('/invoices/create',[App\Classes\Invoices::class, 'store']);
+
+echo $router->resolve($_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD']);
