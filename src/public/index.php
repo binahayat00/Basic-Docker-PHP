@@ -1,14 +1,12 @@
 <?php
 
+use App\Invoice;
+use App\InvoiceCollection;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Exception\InvoiceException;
-use App\Invoice;
-use App\Customer;
+$invoiceCollection = new InvoiceCollection([new Invoice('15'), new Invoice('25'), new Invoice('50')]);
 
-$invoice = new Invoice(new Customer(['name' => 'Alex']));
-try {
-$invoice->process(-25);
-} catch (InvoiceException $exception) {
-    echo $exception->getMessage() . ' File:' . $exception->getFile() .' Line:'. $exception->getLine() . PHP_EOL;
+foreach ($invoiceCollection as $invoice) {
+    echo $invoice->id .' - '. $invoice->amount . '<br />' ;
 }
