@@ -6,6 +6,7 @@ use App\Config;
 use App\Controllers\{
     HomeController,
     InvoicesController,
+    TransactionController,
 };
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -22,6 +23,7 @@ $router->post('/upload', [HomeController::class, 'upload']);
 $router->get('/invoices', [InvoicesController::class, 'index']);
 $router->get('/invoices/create', [InvoicesController::class, 'create']);
 $router->post('/invoices/create', [InvoicesController::class, 'store']);
+$router->get('/transactions', [TransactionController::class, 'index']);
 
 
 echo (

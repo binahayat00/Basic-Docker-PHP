@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use PDO;
-use App\App;
 use App\View;
 use App\Models\User;
 use App\Models\SignUp;
@@ -15,7 +13,11 @@ class HomeController
 {
     public function index(): View
     {
+        return View::make("index", ['title' => 'Home Page']);
+    }
 
+    public function signUp(SignUp $signUp): View
+    {
         $email = 'john4@doe.com';
         $name = 'John1 Doe';
         $amount = 25;
@@ -25,15 +27,15 @@ class HomeController
 
         $invoiceId = (new SignUp($userModel, $invoiceModel))->register(
             [
-                'email'=> $email,
-                'name'=> $name,
+                'email' => $email,
+                'name' => $name,
             ],
             [
-                'amount'=> $amount,
+                'amount' => $amount,
             ]
         );
 
-        return View::make("index", ['title' => 'Home Page', 'invoice' => $invoiceModel->find($invoiceId)]);
+        return View::make("index", ['title' => 'Sign Up Page', 'invoice' => $invoiceModel->find($invoiceId)]);
     }
 
     public function upload()
