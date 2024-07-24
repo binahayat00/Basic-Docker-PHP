@@ -6,7 +6,7 @@ use App\Exception\RouteNotFoundException;
 
 class Router
 {
-    private array $routes;
+    private array $routes = [];
     public function addRoute(string $requestMethod, string $route, callable|array $action): self
     {
         $this->routes[$requestMethod][$route] = $action;
@@ -34,7 +34,7 @@ class Router
     }
     public function options(string $route, callable|array $action): self
     {
-        return $this->addRoute("OPTION", $route, $action);
+        return $this->addRoute("OPTIONS", $route, $action);
     }
 
     public function routes(): array
@@ -42,7 +42,7 @@ class Router
         return $this->routes;
     }
 
-    public function resolve(string $requestUrl, string $requestMethod): ?string
+    public function resolve(string $requestUrl, string $requestMethod)
     {
         $route = explode('?', $requestUrl)[0];
         $action = $this->routes[$requestMethod][$route] ?? null;
