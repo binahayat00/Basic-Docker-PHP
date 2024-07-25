@@ -23,6 +23,7 @@ class InvoiceService
         }
 
         $this->emailService->send($customer,'receipt');
+        
         return true;
     }
 }

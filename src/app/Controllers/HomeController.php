@@ -8,9 +8,14 @@ use App\View;
 use App\Models\User;
 use App\Models\SignUp;
 use App\Models\Invoice;
+use App\Services\InvoiceService;
 
 class HomeController
 {
+
+    public function __construct(private InvoiceService $invoiceService)
+    {
+    }
     public function index(): View
     {
         return View::make("index", ['title' => 'Home Page']);
