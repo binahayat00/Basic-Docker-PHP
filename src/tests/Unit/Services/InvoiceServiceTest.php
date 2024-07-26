@@ -5,7 +5,7 @@ declare(strict_types= 1);
 namespace Tests\Unit\Services;
 
 use App\Services\EmailService;
-use App\Services\GatewayService;
+use App\Services\StripePaymentService;
 use App\Services\InvoiceService;
 use App\Services\SalesTaxService;
 
@@ -14,7 +14,7 @@ class InvoiceServiceTest extends \PHPUnit\Framework\TestCase
     public function test_processes_invoice(): void
     {
         $salesTaxServiceMock = $this->createMock(SalesTaxService::class);
-        $gatewayServiceMock = $this->createMock(GatewayService::class);
+        $gatewayServiceMock = $this->createMock(StripePaymentService::class);
         $emailServiceMock = $this->createMock(EmailService::class);
 
         $gatewayServiceMock->method('charge')->willReturn(true);
@@ -39,7 +39,7 @@ class InvoiceServiceTest extends \PHPUnit\Framework\TestCase
     public function test_sends_receipt_email_when_invoice_is_processed(): void
     {
         $salesTaxServiceMock = $this->createMock(SalesTaxService::class);
-        $gatewayServiceMock = $this->createMock(GatewayService::class);
+        $gatewayServiceMock = $this->createMock(StripePaymentService::class);
         $emailServiceMock = $this->createMock(EmailService::class);
 
         $gatewayServiceMock->method('charge')->willReturn(true);

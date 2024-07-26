@@ -30,6 +30,7 @@ $router->get('/transactions', [TransactionController::class, 'index']);
 
 echo (
     new App(
+        $container,
         $router,
         [
             'uri' => $_SERVER['REQUEST_URI'],

@@ -3,12 +3,14 @@
 declare(strict_types=1);
 
 namespace App\Services;
+use App\Services\Interfaces\PaymentGatewayInterface;
+
 
 class InvoiceService
 {
     public function __construct(
-        protected SalesTaxService $salesTaxService, 
-        protected GatewayService $gatewayService, 
+        protected SalesTaxService $salesTaxService,
+        protected PaymentGatewayInterface $gatewayService, 
         protected EmailService $emailService)
     {
 
