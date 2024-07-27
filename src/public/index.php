@@ -8,6 +8,7 @@ use App\Controllers\{
     HomeController,
     InvoicesController,
     TransactionController,
+    GeneratorExampleController,
 };
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -20,12 +21,14 @@ define('VIEW_PATH', __DIR__ . '/../views');
 
 $container = new Container();
 $router = new Router($container);
-$router->get('/', [HomeController::class, 'index']);
-$router->post('/upload', [HomeController::class, 'upload']);
-$router->get('/invoices', [InvoicesController::class, 'index']);
-$router->get('/invoices/create', [InvoicesController::class, 'create']);
-$router->post('/invoices/create', [InvoicesController::class, 'store']);
-$router->get('/transactions', [TransactionController::class, 'index']);
+$router->get('/', [HomeController::class, 'index'])
+    ->post('/upload', [HomeController::class, 'upload'])
+    ->get('/invoices', [InvoicesController::class, 'index'])
+    ->get('/invoices/create', [InvoicesController::class, 'create'])
+    ->post('/invoices/create', [InvoicesController::class, 'store'])
+    ->get('/transactions', [TransactionController::class, 'index'])
+    ->get('/generator/example', [GeneratorExampleController::class,'index'])
+;
 
 
 echo (
