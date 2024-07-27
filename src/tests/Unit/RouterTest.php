@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Unit;
 
+use App\Container;
 use App\Exception\RouteNotFoundException;
 use App\Router;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
@@ -12,10 +13,12 @@ use PHPUnit\Framework\TestCase;
 class RouterTest extends TestCase
 {
     private Router $router;
+    private Container $container;
     public function setUp(): void
     {
         parent::setUp();
-        $this->router = new Router();
+        $this->container = new Container();
+        $this->router = new Router($this->container);
     }
     public function test_add_router(): void
     {
@@ -97,7 +100,7 @@ class RouterTest extends TestCase
 
     public function test_there_are_no_routes_when_router_is_created(): void
     {
-        $this->assertEmpty((new Router())->routes());
+        $this->assertEmpty((new Router($this->container))->routes());
     }
 
     #[DataProviderExternal(\Tests\DataProviders\RouterDataProvider::class, 'routeNotFoundCases')]
