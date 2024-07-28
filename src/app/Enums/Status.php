@@ -1,16 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
-class Status {
-    public const PAID = 'paid';
-    public const PENDING = 'pending';
-    public const DECLINED = 'declined';
+enum Status
+{
+    case PAID;
+    case PENDING;
+    case DECLINED;
 
-    public const ALL_STATUSES = [
-        self::PAID => 'Paid',
-        self::PENDING => 'Pending',
-        self::DECLINED => 'Declined',
-    ];
+    public function text() : string
+    {
+        return match ($this) {
+            self::PAID => 'paid',
+            self::PENDING => 'pending',
+            self::DECLINED => 'declined',
+        };
+    }
+    
+    public static function all() : array
+    {
+        $statuses = [];
+        foreach (self::cases() as $status) {
+            $statuses[] = $status->text();
+        }
+        return $statuses;
+    }
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Router;
 use App\App;
 use App\Config;

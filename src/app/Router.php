@@ -8,7 +8,7 @@ class Router
 {
     private array $routes = [];
 
-    public function __construct(private Container $container)
+    public function __construct(private Container $container = new Container())
     {
     }
     public function addRoute(string $requestMethod, string $route, callable|array $action): self
