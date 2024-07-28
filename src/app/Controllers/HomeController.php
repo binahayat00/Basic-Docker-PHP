@@ -7,15 +7,18 @@ namespace App\Controllers;
 use App\View;
 use App\Models\User;
 use App\Models\SignUp;
+use App\Attributes\Get;
 use App\Models\Invoice;
+use App\Attributes\Post;
 use App\Services\InvoiceService;
 
 class HomeController
 {
-
     public function __construct(private InvoiceService $invoiceService)
     {
     }
+
+    #[Get(path:"/")]
     public function index(): View
     {
         return View::make("index", ['title' => 'Home Page']);
@@ -43,6 +46,7 @@ class HomeController
         return View::make("index", ['title' => 'Sign Up Page', 'invoice' => $invoiceModel->find($invoiceId)]);
     }
 
+    #[Post(path:'/upload')]
     public function upload()
     {
         $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];

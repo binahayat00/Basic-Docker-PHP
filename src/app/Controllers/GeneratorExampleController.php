@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 namespace App\Controllers;
+use App\Attributes\Get;
 
 class GeneratorExampleController
 {
+    #[Get(path:"/generator/example")]
     public function index()
     {
         $numbers = $this->usualRange(1,10000);
