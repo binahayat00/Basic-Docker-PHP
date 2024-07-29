@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types= 1);
+declare(strict_types=1);
 
 namespace App;
 
@@ -19,28 +19,32 @@ class View
 
     public function render(bool $withLayout = true): string
     {
-        $pagePath = VIEW_PATH . '/layouts/page' . '.php';
-        if(!file_exists($pagePath)){
-            throw new ViewNotFoundException();
+        if ($withLayout === true) {
+            $pagePath = VIEW_PATH . '/layouts/page' . '.php';
+
+            if (!file_exists($pagePath)) {
+                throw new ViewNotFoundException();
+            }
+
+            ob_start();
+
+            include $pagePath;
+
+            $pageHtml = (string) ob_get_clean();
         }
-        ob_start();
-        
-        include $pagePath;
-
-        $pageHtml = (string) ob_get_clean();
-
         $viewPath = VIEW_PATH . '/' . $this->view . '.php';
-        if(!file_exists($viewPath)){
+
+        if (!file_exists($viewPath)) {
             throw new ViewNotFoundException();
         }
         foreach ($this->params as $key => $value) {
             $$key = $value;
         }
         ob_start();
-        
+
         include $viewPath;
         $viewHtml = (string) ob_get_clean();
-        $wholePage = str_replace('{{content}}',$viewHtml, $pageHtml);
+        $wholePage = str_replace('{{content}}', $viewHtml, $pageHtml ?? '');
         return $wholePage;
     }
 

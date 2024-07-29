@@ -11,6 +11,7 @@ use App\Controllers\{
     InvoicesController,
     TransactionController,
     GeneratorExampleController,
+    UserController,
 };
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -30,6 +31,7 @@ $router->registerRoutesFromControllerAttribuutes(
         InvoicesController::class,
         TransactionController::class,
         GeneratorExampleController::class,
+        UserController::class,
     ]
 );
 // $router->get('/', [HomeController::class, 'index'])

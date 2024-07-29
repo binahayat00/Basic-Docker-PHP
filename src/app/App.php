@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App;
 
 use App\DB;
-use App\Exception\RouteNotFoundException;
 use App\Services\StripePaymentService;
+use App\Exception\RouteNotFoundException;
+use Symfony\Component\Mailer\MailerInterface;
+use App\Services\SymfonyMail\CustomMailerService;
 use App\Services\Interfaces\PaymentGatewayInterface;
 
 class App
@@ -19,6 +21,10 @@ class App
         $this->container->set(
             PaymentGatewayInterface::class,
             StripePaymentService::class
+        );
+        $this->container->set(
+            MailerInterface::class,
+            fn() => new CustomMailerService($config->mailer['dsn'])
         );
     }
 
