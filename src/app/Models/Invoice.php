@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\InvoiceStatus;
 use App\Model;
 
 class Invoice extends Model
@@ -34,5 +35,28 @@ class Invoice extends Model
         $invoice = $stmt->fetch();
 
         return $invoice ?? [];
+    }
+
+    public function all(): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT * FROM invoices'
+        );
+
+        $stmt->execute();
+
+        return  $stmt->fetchAll() ?? [];
+    }
+
+    public function filterByStatus(InvoiceStatus $status): array
+    {
+        $stmt = $this->db->prepare(
+            'SELECT * FROM invoices
+            WHERE status = :status'
+        );
+
+        $stmt->execute(['status'=> $status->value]);
+
+        return  $stmt->fetchAll() ?? [];
     }
 }

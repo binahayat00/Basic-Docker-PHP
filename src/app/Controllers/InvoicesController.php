@@ -5,15 +5,19 @@ declare(strict_types= 1);
 namespace App\Controllers;
 
 use App\View;
+use App\Enums\Color;
 use App\Attributes\Get;
+use App\Models\Invoice;
 use App\Attributes\Post;
+use App\Enums\InvoiceStatus;
 
 class InvoicesController
 {
     #[Get(path:"/invoices")]
     public function index(): View
     {
-        return View::make("invoices/index");
+        $invoices = (new Invoice)->filterByStatus(InvoiceStatus::PAID);
+        return View::make("invoices/index",["invoices"=> $invoices]);
     }
 
     #[Get(path:"/invoices/create")]

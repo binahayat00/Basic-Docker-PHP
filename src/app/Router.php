@@ -30,7 +30,7 @@ class Router
                     $route = $attribute->newInstance();
 
                     $this->addRoute(
-                        $route->method, 
+                        $route->method->value, 
                         $route->path, 
                         [$controller , $method->getName()]
                     );
