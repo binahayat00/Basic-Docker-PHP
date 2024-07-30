@@ -7,7 +7,7 @@ services:
     restart: always
     working_dir: /var/www/
     volumes:
-      - ../src:/var/www
+      - ../:/var/www
   nginx:
     image: nginx:1.27-alpine
     container_name: programwithamir-nginx
@@ -15,7 +15,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ../src:/var/www
+      - ../:/var/www
       - ./nginx:/etc/nginx/conf.d
   db:
     container_name: programwithamir-db
@@ -36,3 +36,9 @@ services:
     ports:
       - "8025:8025"
       - "1025:1024"
+  cron:
+    container_name: programwithamir-cron
+    build: ./cron
+    volumes:
+      - ../:/var/www
+      - ./log/cron:/var/log/cron

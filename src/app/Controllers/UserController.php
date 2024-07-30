@@ -8,26 +8,26 @@ use App\Attributes\{
     Post,
 };
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
 class UserController
 {
-    public function __construct(protected MailerInterface $mailer)
-    {
-
-    }
-    #[Get(path:"/users/create")]
+    #[Get(path: "/users/create")]
     public function create(): View
     {
         return View::make("users/register");
     }
 
-    #[Post(path:"/users")]
+    #[Post(path: "/users")]
     public function register()
     {
         $name = $_POST['name'];
         $email = $_POST['email'];
         $firstName = explode(' ', $name)[0];
+
+        $fromEmail = 'support@example.com';
+        $fromName = 'Support';
 
         $text = <<<Body
         Hello $firstName,
@@ -37,14 +37,12 @@ class UserController
 
         $html = View::make('emails/welcome', ['firstName' => $firstName])->render();
 
-        $email = (new Email())
-                    ->from('support@example.com')
-                    ->to($email)
-                    ->subject('Welcome!')
-                    ->attach('Welcome File!','welcome.txt')
-                    ->text($text)
-                    ->html($html);
-
-        $this->mailer->send($email);
+        (new \App\Models\Email())->queue(
+            new Address($email,$name),
+            new Address($fromEmail, $fromName),
+            'Welcome',
+            $html,
+            $text
+        );
     }
 }

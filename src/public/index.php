@@ -16,8 +16,6 @@ use App\Controllers\{
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
 
 define('STORAGE_PATH', __DIR__ . '/../storage');
 define('VIEW_PATH', __DIR__ . '/../views');
@@ -34,24 +32,16 @@ $router->registerRoutesFromControllerAttribuutes(
         UserController::class,
     ]
 );
-// $router->get('/', [HomeController::class, 'index'])
-//     ->post('/upload', [HomeController::class, 'upload'])
-//     ->get('/invoices', [InvoicesController::class, 'index'])
-//     ->get('/invoices/create', [InvoicesController::class, 'create'])
-//     ->post('/invoices/create', [InvoicesController::class, 'store'])
-//     ->get('/transactions', [TransactionController::class, 'index'])
-//     ->get('/generator/example', [GeneratorExampleController::class,'index'])
-// ;
-
 
 echo (
-    new App(
+    (new App(
         $container,
         $router,
         [
             'uri' => $_SERVER['REQUEST_URI'],
             'method' => $_SERVER['REQUEST_METHOD']
         ],
-        new Config($_ENV)
-    )
-)->run();
+    ))
+    ->boot()
+    ->run()
+);
