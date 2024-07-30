@@ -1,6 +1,6 @@
-src/vendor
-src/storage
-src/docker/storage
+vendor
+storage
+docker/storage
 .env
 .phpunit.result.cache
-src/docker/log/cron/cron.log
+docker/log/cron/cron.log
