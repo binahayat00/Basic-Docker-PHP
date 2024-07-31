@@ -11,52 +11,53 @@ class Invoice extends Model
 {
     public function create(float $amount, int $userId): int
     {
-        $stmt = $this->db->prepare(
-            'INSERT INTO invoices (amount, user_id)
-            VALUES (?, ?)'
-        );
+        $stmt = $this->db->insert('invoices')->values(
+            [
+                'amount' => '?',
+                'user_id' => '?'
+            ]
+        )->setParameter(0, $amount)
+            ->setParameter(1, $userId);
 
-        $stmt->execute([$amount, $userId]);
-        return (int) $this->db->lastInsertId();
-
+        return $stmt->id;
     }
 
     public function find(int $id): array
     {
-        $stmt = $this->db->prepare(
-            'SELECT invoices.id, amount, user_id, full_name 
-            FROM invoices 
-            LEFT JOIN users ON user_id = users.id 
-            WHERE invoices.id = :id'
-        );
-
-        $stmt->execute(['id' => $id]);
-
-        $invoice = $stmt->fetch();
-
-        return $invoice ?? [];
+        return $this->db->createQueryBuilder()->select(
+            'i.id',
+            'invoice_number',
+            'amount',
+            'status',
+            'user_id',
+            'full_name',
+        )->from('invoices', 'i')
+            ->innerJoin('i', 'users', 'u', 'i.user_id = u.id')
+            ->where('i.id = ?')
+            ->setParameter(0, $id);
     }
 
     public function all(): array
     {
-        $stmt = $this->db->prepare(
-            'SELECT * FROM invoices'
-        );
-
-        $stmt->execute();
-
-        return  $stmt->fetchAll() ?? [];
+        return $this->db->createQueryBuilder()->select(
+            'id',
+            'invoice_number',
+            'amount',
+            'status'
+        )->from('invoices')
+            ->fetchAllAssociative();
     }
 
     public function filterByStatus(InvoiceStatus $status): array
     {
-        $stmt = $this->db->prepare(
-            'SELECT * FROM invoices
-            WHERE status = :status'
-        );
-
-        $stmt->execute(['status'=> $status->value]);
-
-        return  $stmt->fetchAll() ?? [];
+        return $this->db->createQueryBuilder()->select(
+            'id',
+            'invoice_number',
+            'amount',
+            'status'
+        )->from('invoices')
+            ->where('status = ?')
+            ->setParameter(1, $status->value)
+            ->fetchAllAssociative();
     }
 }
