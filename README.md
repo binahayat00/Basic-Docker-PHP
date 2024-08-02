@@ -1,2 +1,2 @@
 # Basic-Docker
-This is a simple project runs with dicker and basic topic in php.
+This is a simple project that runs with docker and basic topics in PHP.
