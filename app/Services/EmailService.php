@@ -9,16 +9,13 @@ use Symfony\Component\Mime\Email as EmailMime;
 
 class EmailService
 {
-    public function __construct(protected Email $emailModel,protected MailerInterface $mailer)
+    public function __construct(protected MailerInterface $mailer)
     {
 
     }
 
-    public function sendQueuedEmails()
+    public function sendQueuedEmails($email)
     {
-        $queuedEmail = $this->emailModel->getEmailsByStatus(EmailStatus::Queue);
-
-        foreach ($queuedEmail as $email) {
             try {
 
             $meta = json_decode($email->meta, true);
@@ -31,12 +28,9 @@ class EmailService
 
             $this->mailer->send($emailMessage);
 
-            $this->emailModel->markEmailSent($email->id);
-
             } catch (\Throwable) {
                 throw new SendException();
             }
-        }
     }
     public function send(array $customer,string $email)
     {
