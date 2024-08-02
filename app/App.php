@@ -38,6 +38,11 @@ class App
             fn() => new CustomMailerService($this->config->mailer['dsn'])
         );
 
+        $this->container->bind(
+            Config::class,
+            fn() => new Config($_ENV)
+        );
+
         return $this;
     }
 

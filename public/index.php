@@ -7,6 +7,7 @@ use App\App;
 use App\Controllers\{
     HomeController,
     InvoicesController,
+    CurlController,
 };
 use Illuminate\Container\Container;
 
@@ -23,6 +24,7 @@ $router->registerRoutesFromControllerAttribuutes(
     [
         HomeController::class,
         InvoicesController::class,
+        CurlController::class,
     ]
 );
 
