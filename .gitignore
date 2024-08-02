@@ -1,0 +1,6 @@
+vendor
+storage
+docker/storage
+.env
+.phpunit.result.cache
+docker/log/cron/cron.log
