@@ -13,7 +13,7 @@ class Config
     {
         $this->config = [
             'db' => [
-                'driver' => $env['DB_DRIVER'] ?? 'pdo_mysql',
+                'driver' => $env['DB_DRIVER'] ?? 'mysql',
                 'host' => $env['DB_HOST'],
                 'dbname' => $env['DB_DATABASE'],
                 'user' => $env['DB_USER'],

@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Dotenv\Dotenv;
 
-require __DIR__ ."/../vendor/autoload.php";
+require_once __DIR__ ."/../vendor/autoload.php";
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
