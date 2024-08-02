@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\View;
-use App\Models\User;
-use App\Models\SignUp;
 use App\Attributes\Get;
-use App\Models\Invoice;
 use App\Attributes\Post;
 use App\Services\InvoiceService;
 
@@ -22,28 +19,6 @@ class HomeController
     public function index(): View
     {
         return View::make("index", ['title' => 'Home Page']);
-    }
-
-    public function signUp(SignUp $signUp): View
-    {
-        $email = 'john4@doe.com';
-        $name = 'John1 Doe';
-        $amount = 25;
-
-        $userModel = new User();
-        $invoiceModel = new Invoice();
-
-        $invoiceId = (new SignUp($userModel, $invoiceModel))->register(
-            [
-                'email' => $email,
-                'name' => $name,
-            ],
-            [
-                'amount' => $amount,
-            ]
-        );
-
-        return View::make("index", ['title' => 'Sign Up Page', 'invoice' => $invoiceModel->find($invoiceId)]);
     }
 
     #[Post(path:'/upload')]

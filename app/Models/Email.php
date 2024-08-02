@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\EmailStatus;
-use App\Model;
 use PDO;
+use App\Enums\EmailStatus;
 use Symfony\Component\Mime\Address;
+use Illuminate\Database\Eloquent\Model;
 
 class Email extends Model
 {
