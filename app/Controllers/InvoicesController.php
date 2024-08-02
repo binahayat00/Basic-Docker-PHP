@@ -5,7 +5,6 @@ declare(strict_types= 1);
 namespace App\Controllers;
 
 use App\View;
-use App\Enums\Color;
 use App\Attributes\Get;
 use App\Models\Invoice;
 use App\Attributes\Post;
@@ -16,7 +15,8 @@ class InvoicesController
     #[Get(path:"/invoices")]
     public function index(): View
     {
-        $invoices = (new Invoice)->filterByStatus(InvoiceStatus::PAID);
+        $invoices = Invoice::query()->where('status',InvoiceStatus::PAID)->get()->toArray();
+
         return View::make("invoices/index",["invoices"=> $invoices]);
     }
 

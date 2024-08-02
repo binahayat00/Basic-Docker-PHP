@@ -7,11 +7,10 @@ namespace App\Controllers;
 use App\View;
 use App\Attributes\Get;
 use App\Attributes\Post;
-use App\Services\InvoiceService;
 
 class HomeController
 {
-    public function __construct(private InvoiceService $invoiceService)
+    public function __construct()
     {
     }
 

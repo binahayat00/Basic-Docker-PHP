@@ -16,6 +16,15 @@ class Invoice extends Model
         'created_at' => 'datetime',
         'status' => InvoiceStatus::class,
     ];
+
+    protected static function booted()
+    {
+        static::creating(function (Invoice $invoice){
+            if($invoice->isClean('status')){
+                $invoice->status = InvoiceStatus::VOID;
+            }
+        });
+    }
     public function items(): HasMany
     {
         return $this->hasMany(InvoiceItem::class);

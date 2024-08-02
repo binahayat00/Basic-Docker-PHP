@@ -4,6 +4,7 @@ namespace App;
 
 use App\Attributes\Route;
 use App\Exception\RouteNotFoundException;
+use Illuminate\Container\Container;
 
 class Router
 {

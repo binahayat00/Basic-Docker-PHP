@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Unit;
 
-use App\Container;
+use Illuminate\Container\Container;
 use App\Exception\RouteNotFoundException;
 use App\Router;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
