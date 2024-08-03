@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Services\Emailable\EmailValidationService;
 use Dotenv\Dotenv;
 use App\Config;
 use App\Services\SymfonyMail\CustomMailerService;
@@ -41,6 +42,11 @@ class App
         $this->container->bind(
             Config::class,
             fn() => new Config($_ENV)
+        );
+
+        $this->container->bind(
+            EmailValidationService::class,
+            fn() => new EmailValidationService($this->config->apiKeys['emailable'])
         );
 
         return $this;

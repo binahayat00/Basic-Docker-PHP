@@ -5,27 +5,22 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Attributes\Get;
-use App\Config;
+use App\Services\Emailable\EmailValidationService;
 
 class CurlController
 {
-    public function __construct(protected Config $config)
+    public function __construct(private EmailValidationService $emailValidationService)
     {
     }
 
     #[Get('/curl')]
-    public function index(): mixed
+    public function index()
     {
-        $url = "https://api.emailable.com/v1/verify?" . http_build_query($this->config->emailable);
-        $handle = curl_init();
+        $email = 'test@test.com';
+        $result = $this->emailValidationService->verify($email);
+        echo '<pre>';
+        var_dump($result);
+        echo '</pre>';
 
-        curl_setopt($handle, CURLOPT_URL, $url);
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_HTTPGET, true);
-
-        $response = curl_exec($handle);
-        curl_close($handle);
-
-        return $response;
     }
 }

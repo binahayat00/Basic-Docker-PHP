@@ -5,7 +5,7 @@ namespace App;
 /**
  * @property-read ?array $db
  * @property-read ?array $mailer
- * @property-read ?array $emailable
+ * @property-read ?array $apiKeys
  */
 class Config
 {
@@ -26,9 +26,8 @@ class Config
             'mailer' => [
                 'dsn' => $env['MAILER_DSN'] ?? '',
             ],
-            'emailable' => [
-                'api_key'=> $env['EMAILABLE_API_KEY'] ?? '',
-                'email'=> $env['EMAILABLE_EMAIL'] ?? '',
+            'apiKeys' => [
+                'emailable'=> $env['EMAILABLE_API_KEY'] ?? '',
             ]
         ];
     }
