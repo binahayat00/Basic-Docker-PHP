@@ -10,7 +10,9 @@
         "symfony/stopwatch": "*",
         "doctrine/migrations": "^3.8",
         "illuminate/database": "^11.19",
-        "illuminate/events": "^11.19"
+        "illuminate/events": "^11.19",
+        "ralouphie/getallheaders": "^3.0",
+        "guzzlehttp/guzzle": "^7.9"
     },
     "autoload": {
         "psr-4": {
