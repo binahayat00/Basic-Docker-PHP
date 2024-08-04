@@ -1,14 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\AbstractApi;
 
-use App\Contracts\Services\EmailValidationInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\HandlerStack;
+use App\Enums\EmailValidations;
+use App\DTO\EmailValidationResult;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\ConnectException;
+use App\Contracts\Services\EmailValidationInterface;
 
 class EmailValidationService implements EmailValidationInterface
 {
@@ -17,7 +21,7 @@ class EmailValidationService implements EmailValidationInterface
     {
     }
 
-    public function verify(string $email): array
+    public function verify(string $email): EmailValidationResult
     {
         $stack = HandlerStack::create();
 
@@ -50,22 +54,24 @@ class EmailValidationService implements EmailValidationInterface
         // $response = curl_exec($handle);
         // curl_close($handle);
 
-        return json_decode($request->getBody()->getContents(), true);
+        $body = json_decode($request->getBody()->getContents(), true);
+        var_dump($body);
+        return new EmailValidationResult((int) ($body['quality_score'] * 100), $body['deliverability'] === EmailValidations::ABSTRACT_DELIVERABLE->value);
     }
 
     public function getRetryMiddleware(int $maxRetries)
     {
         return Middleware::retry(
             function (int $retries, RequestInterface $request, ?ResponseInterface $response = null, ?\RuntimeException $exception = null) use ($maxRetries) {
-                if ($retries >= $maxRetries) {                    
+                if ($retries >= $maxRetries) {
                     return false;
                 }
 
-                if ($response && in_array($response->getStatusCode(), [249, 429, 503])) {                    
+                if ($response && in_array($response->getStatusCode(), [249, 429, 503])) {
                     return true;
                 }
 
-                if ($exception instanceof ConnectException) {                    
+                if ($exception instanceof ConnectException) {
                     return true;
                 }
 

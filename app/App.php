@@ -50,6 +50,11 @@ class App
             fn() => new EmailValidationService($this->config->apiKeys['abstract_api_email_validation'])
         );
 
+        // $this->container->bind(
+        //     EmailValidationInterface::class,
+        //     fn() => new \App\Services\Emailable\EmailValidationService($this->config->apiKeys['emailable'])
+        // );
+
         return $this;
     }
 
