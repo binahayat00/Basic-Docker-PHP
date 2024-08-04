@@ -41,16 +41,8 @@ class EmailValidationService implements EmailValidationInterface
         ];
 
         $postfixUrl = 'verify';
-        // $url = $this->baseUrl . "verify?" . http_build_query($params);
         $request = $client->get($postfixUrl, compact('query'));
-        // curl_setopt($handle, CURLOPT_URL, $url);
-        // curl_setopt($handle, CURLOPT_HTTPGET, true);
-
-
-        // curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-
-        // $response = curl_exec($handle);
-        // curl_close($handle);
+        
         $body = json_decode($request->getBody()->getContents(), true);
 
         return new EmailValidationResult((int) $body['score'],$body['state'] === EmailValidations::EMAILABLE_DELIVERABLE->value);
