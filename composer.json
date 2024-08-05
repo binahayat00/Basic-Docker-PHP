@@ -12,7 +12,9 @@
         "illuminate/database": "^11.19",
         "illuminate/events": "^11.19",
         "ralouphie/getallheaders": "^3.0",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "twig/twig": "^3.10",
+        "twig/intl-extra": "^3.10"
     },
     "autoload": {
         "psr-4": {

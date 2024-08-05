@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Contracts\Services\EmailValidationInterface;
-use App\Services\AbstractApi\EmailValidationService;
-use Dotenv\Dotenv;
 use App\Config;
-use App\Services\SymfonyMail\CustomMailerService;
+use Dotenv\Dotenv;
+use Twig\Environment;
+use Illuminate\Events\Dispatcher;
+use Twig\Loader\FilesystemLoader;
+use Twig\Extra\Intl\IntlExtension;
+use Illuminate\Container\Container;
 use App\Exception\RouteNotFoundException;
 use Symfony\Component\Mailer\MailerInterface;
-use Illuminate\Events\Dispatcher;
+use App\Services\SymfonyMail\CustomMailerService;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Container\Container;
+use App\Contracts\Services\EmailValidationInterface;
+use App\Services\AbstractApi\EmailValidationService;
 
 class App
 {
@@ -35,6 +38,16 @@ class App
 
         $this->initDb($this->config->db);
 
+        $loader = new FilesystemLoader(VIEW_PATH);
+        $twig = new Environment($loader, [
+            'cache' => STORAGE_PATH . '/cache',
+            'auto_reload' => true
+        ]);
+
+        $twig->addExtension(new IntlExtension());
+
+        $this->container->singleton(Environment::class, fn() => $twig);
+
         $this->container->bind(
             MailerInterface::class,
             fn() => new CustomMailerService($this->config->mailer['dsn'])
@@ -49,11 +62,6 @@ class App
             EmailValidationInterface::class,
             fn() => new EmailValidationService($this->config->apiKeys['abstract_api_email_validation'])
         );
-
-        // $this->container->bind(
-        //     EmailValidationInterface::class,
-        //     fn() => new \App\Services\Emailable\EmailValidationService($this->config->apiKeys['emailable'])
-        // );
 
         return $this;
     }
