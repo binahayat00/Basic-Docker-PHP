@@ -12,8 +12,6 @@ use Twig\Loader\FilesystemLoader;
 use Twig\Extra\Intl\IntlExtension;
 use Illuminate\Container\Container;
 use App\Exception\RouteNotFoundException;
-use Symfony\Component\Mailer\MailerInterface;
-use App\Services\SymfonyMail\CustomMailerService;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Contracts\Services\EmailValidationInterface;
 use App\Services\AbstractApi\EmailValidationService;
@@ -47,11 +45,6 @@ class App
         $twig->addExtension(new IntlExtension());
 
         $this->container->singleton(Environment::class, fn() => $twig);
-
-        $this->container->bind(
-            MailerInterface::class,
-            fn() => new CustomMailerService($this->config->mailer['dsn'])
-        );
 
         $this->container->bind(
             Config::class,
