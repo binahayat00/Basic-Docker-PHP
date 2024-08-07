@@ -14,21 +14,32 @@ class Config
     {
         $this->config = [
             'db' => [
-                'driver' => $env['DB_DRIVER'] ?? 'mysql',
-                'host' => $env['DB_HOST'],
-                'database' => $env['DB_DATABASE'],
-                'username' => $env['DB_USER'],
-                'password' => $env['DB_PASSWORD'],
-                'charset' => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix' => '',
+                'eloquent' =>
+                    [
+                        'driver' => $env['DB_DRIVER'] ?? 'mysql',
+                        'host' => $env['DB_HOST'],
+                        'database' => $env['DB_DATABASE'],
+                        'username' => $env['DB_USER'],
+                        'password' => $env['DB_PASSWORD'],
+                        'charset' => 'utf8',
+                        'collation' => 'utf8_unicode_ci',
+                        'prefix' => '',
+                    ],
+                'doctrine' =>
+                    [
+                        'driver' => $env['DB_DRIVER'] ?? 'mysql',
+                        'host' => $env['DB_HOST'],
+                        'dbname' => $env['DB_DATABASE'],
+                        'user' => $env['DB_USER'],
+                        'password' => $env['DB_PASSWORD'],
+                    ],
             ],
             'mailer' => [
                 'dsn' => $env['MAILER_DSN'] ?? '',
             ],
             'apiKeys' => [
-                'emailable'=> $env['EMAILABLE_API_KEY'] ?? '',
-                'abstract_api_email_validation'=> $env['ABSTRACT_API_EMAIL_VALIDATION_API_KEY'] ?? '',
+                'emailable' => $env['EMAILABLE_API_KEY'] ?? '',
+                'abstract_api_email_validation' => $env['ABSTRACT_API_EMAIL_VALIDATION_API_KEY'] ?? '',
             ]
         ];
     }

@@ -4,6 +4,7 @@ declare(strict_types= 1);
 
 namespace App\Controllers;
 
+use App\Services\InvoiceService;
 use App\View;
 use Slim\Views\Twig;
 use App\Attributes\Get;
@@ -15,25 +16,14 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class InvoicesController
 {
-    public function __construct()
+    public function __construct(protected InvoiceService $invoiceService)
     {
 
     }
 
     public function index(Request $request, Response $response, $args): Response
     {
-        $invoices = Invoice::query()
-        ->where('status',InvoiceStatus::PAID)
-        ->get()
-        ->map(
-            fn(Invoice $invoice) => [
-                'invoiceNumber' => $invoice->invoice_number,
-                'amount' => $invoice->amount,
-                'status' => $invoice->status->name,
-                'createdAt' => $invoice->created_at->toDateTimeString(),
-            ]
-        )
-        ->toArray();
+        $invoices = $this->invoiceService->getPaidInvoices();
 
         return Twig::fromRequest($request)->render(
             $response,

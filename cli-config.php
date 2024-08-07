@@ -18,7 +18,7 @@ $dotenv->load();
 
 $config = new PhpFile('migrations.php'); // Or use one of the Doctrine\Migrations\Configuration\Configuration\* loaders
 
-$params = (new Config($_ENV))->db;
+$params = (new Config($_ENV))->db['doctrine'];
 
 $configORM = ORMSetup::createAttributeMetadataConfiguration(
     paths: array(__DIR__ . "/app/Entity"),
