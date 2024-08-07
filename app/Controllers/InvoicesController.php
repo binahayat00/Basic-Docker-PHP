@@ -16,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class InvoicesController
 {
-    public function __construct(protected InvoiceService $invoiceService)
+    public function __construct(private readonly Twig $twig, private readonly InvoiceService $invoiceService)
     {
 
     }
@@ -25,7 +25,7 @@ class InvoicesController
     {
         $invoices = $this->invoiceService->getPaidInvoices();
 
-        return Twig::fromRequest($request)->render(
+        return $this->twig->render(
             $response,
             "invoices/index.twig",
             ["invoices"=> $invoices]
