@@ -2,26 +2,15 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
-use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
-require dirname(__DIR__) . '/vendor/autoload.php';
-require dirname(__DIR__) . '/configs/path_constants.php';
+$app = require dirname(__DIR__) . '/bootstrap.php';
 
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+$container = $app->getContainer();
 
-// Create Container using PHP-DI
-$container = require CONFIG_PATH . '/container.php';
 $router = require CONFIG_PATH . '/routes.php';
 
-
-
-AppFactory::setContainer($container);
-
-$app = AppFactory::create();
 
 $router($app);
 

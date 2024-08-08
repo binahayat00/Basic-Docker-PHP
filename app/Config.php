@@ -3,6 +3,7 @@
 namespace App;
 
 /**
+ * @property-read ?array $app
  * @property-read ?array $db
  * @property-read ?array $mailer
  * @property-read ?array $apiKeys
@@ -14,6 +15,10 @@ class Config
     public function __construct(array $env = [])
     {
         $this->config = [
+            'app' => [
+                'name' => $env['APP_NAME'] ?? '',
+                'version' => $env['APP_VERSION'] ?? '',
+            ],
             'db' => [
                 'eloquent' =>
                     [
